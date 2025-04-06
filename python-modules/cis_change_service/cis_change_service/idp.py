@@ -1,9 +1,9 @@
+# DEBT(bhee): This is _very_ similar to cis_profile_retrieval_service.
 import json
 import logging
 
 from functools import wraps
-from flask import request
-from flask import _request_ctx_stack
+from flask import g, request
 from six.moves.urllib.request import urlopen
 from jose import jwt
 
@@ -98,8 +98,8 @@ def requires_auth(f):
                     raise AuthError(
                         {"code": "invalid_header", "description": "Unable to parse authentication" " token."}, 401
                     )
-
-                _request_ctx_stack.top.current_user = payload
+                # This isn't being used.
+                g.current_user = payload
                 return f(*args, **kwargs)
             raise AuthError({"code": "invalid_header", "description": "Unable to find appropriate key"}, 401)
 
