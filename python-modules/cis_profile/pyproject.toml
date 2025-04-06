@@ -1,0 +1,39 @@
+[project]
+name = "cis_profile"
+version = "0.0.1"
+description = "Interop layer for mozilla-iam and AWS use of DynamoDb, Kinesis, and SSM Parameter Store."
+authors = [
+    {name = "Andrew Krug",email = "akrug@mozilla.com"},
+    {name = "Bheesham Persaud",email = "bhee@mozilla.com"},
+    {name = "Jake Watkins",email = "jwatkins@mozilla.com"}
+]
+license = "MPL-2.0"
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "jsonschema (>=4.23.0,<5.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "graphene (>=2.1.9,<3.0.0)",
+    "faker (>=37.1.0,<38.0.0)",
+    "everett (>=3.4.0,<4.0.0)",
+    "everett[ini] (>=3.4.0,<4.0.0)",
+    "configobj (>=5.0.9,<6.0.0)",
+    "click (>=8.1.8,<9.0.0)",
+]
+
+[project.scripts]
+cpf = "cis_profile.cli:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+mock = "^5.2.0"
+pytest = "^8.3.5"
+pytest-watch = "^4.2.0"
+pytest-cov = "^6.1.1"
+flake8 = "^7.2.0"
+flask = "^3.1.0"
+flask-graphql = "^2.0.1"
+flask-restful = "^0.3.10"
