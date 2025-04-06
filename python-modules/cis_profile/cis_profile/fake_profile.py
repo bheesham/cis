@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import datetime
 import base64
 import cis_profile.profile
 import faker
@@ -245,7 +246,7 @@ class FakeCISProfileProvider(faker.providers.BaseProvider):
         return self.generator.random.choice(list(r))
 
     def custom_tz(self):
-        return "UTC{:0=+3}00 {}".format(self.generator.random.randint(-12, 12), self.generator.timezone())
+        return "UTC{:0=+3}00 {}".format(self.generator.random.randint(-12, 12), self.generator.timezone(datetime.timedelta(0)))
 
     def hris(self, employee_id=None, manager_id=None):
         h = {}
