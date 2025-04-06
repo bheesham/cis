@@ -1,0 +1,30 @@
+[project]
+name = "cis_logger"
+version = "0.0.1"
+description = "Mozilla IAM logger wrapper."
+authors = [
+    {name = "Andrew Krug",email = "akrug@mozilla.com"},
+    {name = "Bheesham Persaud",email = "bhee@mozilla.com"},
+    {name = "Jake Watkins",email = "jwatkins@mozilla.com"}
+]
+license = "MPL-2.0"
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "python-json-logger (>=3.3.0,<4.0.0)",
+    "everett (>=3.4.0,<4.0.0)",
+    "everett[ini] (>=3.4.0,<4.0.0)",
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+pytest-watch = "^4.2.0"
+pytest-cov = "^6.1.1"
+flake8 = "^7.2.0"
+flask = "^3.1.0"
+flask-graphql = "^2.0.1"
+flask-restful = "^0.3.10"
