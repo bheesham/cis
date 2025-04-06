@@ -1,0 +1,32 @@
+[project]
+name = "cis_postgresql"
+version = "0.0.1"
+description = "Takes a user profile from the stream and sends to postgresql for storage."
+authors = [
+    {name = "Andrew Krug",email = "akrug@mozilla.com"},
+    {name = "Bheesham Persaud",email = "bhee@mozilla.com"},
+    {name = "Jake Watkins",email = "jwatkins@mozilla.com"}
+]
+license = "MPL-2.0"
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "everett (>=3.4.0,<4.0.0)",
+    "boto (>=2.49.0,<3.0.0)",
+    "boto3 (>=1.37.28,<2.0.0)",
+    "botocore (>=1.37.28,<2.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+pytest-watch = "^4.2.0"
+pytest-cov = "^6.1.1"
+patch = "^1.16"
+mock = "^5.2.0"
+flake8 = "^7.2.0"
+moto = "^5.1.2"
+psycopg = {extras = ["binary"], version = "^3.2.6"}
