@@ -72,3 +72,17 @@ class cli:
                 logger.error("The signature could not be verified.")
                 sys.exit()
             sys.exit()
+
+
+def main():
+    format_string = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    time_format = "%Y-%m-%dT%H:%M:%S"
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    streamHandler = logging.StreamHandler()
+    streamHandler.setLevel(logging.INFO)
+    streamFormatter = logging.Formatter(format_string, time_format)
+    streamHandler.setFormatter(streamFormatter)
+    logger.addHandler(streamHandler)
+    c = cli()
+    c.run()

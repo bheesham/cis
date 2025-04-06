@@ -1,0 +1,41 @@
+[project]
+name = "cis_crypto"
+version = "0.0.1"
+description = "Per attribute signature system for jwks sign-verify in mozilla-iam."
+authors = [
+    {name = "Andrew Krug",email = "akrug@mozilla.com"},
+    {name = "Bheesham Persaud",email = "bhee@mozilla.com"},
+    {name = "Jake Watkins",email = "jwatkins@mozilla.com"}
+]
+license = "MPL-2.0"
+readme = "README.md"
+requires-python = ">=3.13,<4.0"
+dependencies = [
+    "python-jose[cryptography] (>=3.4.0,<4.0.0)",
+    "cryptography (>=44.0.2,<45.0.0)",
+    "everett (>=3.4.0,<4.0.0)",
+    "everett[ini] (>=3.4.0,<4.0.0)",
+    "configobj (>=5.0.9,<6.0.0)",
+    "boto3 (>=1.37.28,<2.0.0)",
+    "boto (>=2.49.0,<3.0.0)",
+    "botocore (>=1.37.28,<2.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "pyyaml (>=6.0.2,<7.0.0)"
+]
+
+[project.scripts]
+cis_crypto = "cis_crypto.cli:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+pytest-watch = "^4.2.0"
+pytest-cov = "^6.1.1"
+pytest-mock = "^3.14.0"
+moto = "^5.1.2"
+mock = "^5.2.0"
+flake8 = "^7.2.0"
+cis_profile = { path = "../cis_profile", develop = true }
