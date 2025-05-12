@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import random
+import unittest
 
 from botocore.stub import Stubber
 from cis_profile import profile
@@ -11,7 +12,7 @@ from cis_profile import fake_profile
 from everett.ext.inifile import ConfigIniEnv
 from everett.manager import ConfigManager
 from everett.manager import ConfigOSEnv
-from moto import mock_dynamodb2
+from moto import mock_aws
 from mock import patch
 
 logger = logging.getLogger(__name__)
@@ -55,9 +56,11 @@ def kinesis_event_generate(user_profile):
     return kinesis_event_structure
 
 
-@mock_dynamodb2
 class TestOperation(object):
-    def setup(self, *args):
+    def setUp(self, *args):
+        self.mock_aws = mock_aws()
+        self.mock_aws.start()
+
         os.environ["CIS_CONFIG_INI"] = "tests/fixture/mozilla-cis.ini"
         self.config = get_config()
         from cis_profile import WellKnown
@@ -87,6 +90,9 @@ class TestOperation(object):
         vault_interface = user.Profile(self.table, self.dynamodb_client, False)
         vault_interface.create(profile_to_vault_structure(user_profile=self.mr_mozilla_profile))
         self.mr_mozilla_change_event = kinesis_event_generate(self.mr_mozilla_profile)
+
+    def tearDown(self):
+        self.mock_aws.stop()
 
     @patch.object(profile.User, "verify_all_publishers")
     @patch.object(profile.User, "verify_all_signatures")

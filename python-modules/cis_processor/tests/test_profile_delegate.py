@@ -4,8 +4,9 @@ import json
 import os
 import random
 import uuid
+import unittest
+from moto import mock_aws
 from botocore.stub import Stubber
-from moto import mock_dynamodb2
 from cis_profile import fake_profile
 from cis_profile import User
 
@@ -34,9 +35,11 @@ def kinesis_event_generate(user_profile):
     return kinesis_event_structure["Records"][0]
 
 
-@mock_dynamodb2
-class TestProfileDelegate(object):
-    def setup(self, *args):
+class TestProfileDelegate(unittest.TestCase):
+    def setUp(self, *args):
+        self.mock_aws = mock_aws()
+        self.mock_aws.start()
+
         os.environ["CIS_CONFIG_INI"] = "tests/fixture/mozilla-cis.ini"
         self.dynamodb_client = boto3.client(
             "dynamodb", region_name="us-west-2", aws_access_key_id="ak", aws_secret_access_key="sk"
@@ -64,6 +67,9 @@ class TestProfileDelegate(object):
         vault_interface.create(profile_to_vault_structure(user_profile=self.mr_nozilla_tainted_profile))
 
         self.mr_mozilla_change_event = kinesis_event_generate(self.mr_mozilla_profile)
+
+    def tearDown(self):
+        self.mock_aws.stop()
 
     def test_vault_is_found(self):
         res = self.vault_client.find()
